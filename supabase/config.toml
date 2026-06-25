@@ -1,0 +1,22 @@
+# =============================================================================
+# La La Sweett — Supabase Project Configuration
+# =============================================================================
+# This file configures the local Supabase development environment.
+# See: https://supabase.com/docs/guides/cli/config
+
+[project]
+id = "la-la-sweett"
+
+[db]
+port = 54322
+major_version = 15
+
+[db.seed]
+enabled = true
+sql_paths = ["./seed.sql"]
+
+[api]
+port = 54321
+
+[studio]
+port = 54323

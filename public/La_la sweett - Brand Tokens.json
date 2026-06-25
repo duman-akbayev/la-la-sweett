@@ -1,0 +1,160 @@
+{
+  "brand": {
+    "name": "La La Sweett",
+    "tagline": "Sweet Moments With Love",
+    "location": "Austin, Texas",
+    "vibe": "Modern, warm, luxurious, feminine, handcrafted — premium boutique bakery"
+  },
+  "colors": {
+    "primary": {
+      "roseGold": "#B87A5E",
+      "roseGoldLight": "#D4A088",
+      "roseGoldDark": "#96604A"
+    },
+    "accent": {
+      "champagneGold": "#C9A96E",
+      "berry": "#8B2252",
+      "softLavender": "#E8D5F0"
+    },
+    "background": {
+      "ivory": "#FFFDF8",
+      "warmCream": "#F7F0E6",
+      "blush": "#F9EDE8",
+      "white": "#FFFFFF"
+    },
+    "text": {
+      "espresso": "#3D2222",
+      "warmBrown": "#5C3D2E",
+      "taupe": "#8C7068"
+    },
+    "gradients": {
+      "heroWarm": "linear-gradient(135deg, #F9EDE8 0%, #F7F0E6 50%, #FFFDF8 100%)",
+      "goldShimmer": "linear-gradient(120deg, #C9A96E 0%, #D4A088 50%, #C9A96E 100%)",
+      "depthGlow": "radial-gradient(ellipse at 30% 20%, rgba(201,169,110,0.08) 0%, transparent 70%)",
+      "cardGlass": "linear-gradient(135deg, rgba(255,253,248,0.9) 0%, rgba(247,240,230,0.7) 100%)"
+    }
+  },
+  "typography": {
+    "display": {
+      "fontFamily": "'Playfair Display', serif",
+      "weights": [400, 500, 600, 700],
+      "tracking": "-0.02em",
+      "usage": "Hero headlines, page titles, section headings"
+    },
+    "brandScript": {
+      "fontFamily": "'Parisienne', cursive",
+      "weights": [400],
+      "tracking": "0",
+      "usage": "Logo, brand name, decorative accents only"
+    },
+    "body": {
+      "fontFamily": "'Inter', sans-serif",
+      "weights": [300, 400, 500, 600],
+      "tracking": "0.01em",
+      "usage": "Body text, UI labels, buttons, navigation"
+    }
+  },
+  "spacing": {
+    "sectionVertical": "96px",
+    "sectionVerticalMobile": "64px",
+    "sectionHorizontal": "24px",
+    "sectionHorizontalMobile": "16px",
+    "cardPadding": "32px",
+    "cardPaddingMobile": "24px",
+    "gridGap": "24px",
+    "gridGapLarge": "32px",
+    "maxWidth": "1280px",
+    "maxWidthNarrow": "768px"
+  },
+  "borderRadius": {
+    "card": "20px",
+    "button": "9999px",
+    "input": "12px",
+    "image": "16px",
+    "badge": "9999px"
+  },
+  "shadows": {
+    "card": "0 4px 24px rgba(61,34,34,0.06), 0 1px 4px rgba(61,34,34,0.04)",
+    "cardHover": "0 12px 40px rgba(61,34,34,0.10), 0 4px 12px rgba(184,122,94,0.08)",
+    "button": "0 4px 16px rgba(184,122,94,0.25)",
+    "buttonHover": "0 8px 24px rgba(184,122,94,0.35)",
+    "glass": "0 8px 32px rgba(61,34,34,0.08)",
+    "elevated": "0 20px 60px rgba(61,34,34,0.12)"
+  },
+  "motion": {
+    "easing": {
+      "spring": "cubic-bezier(0.23, 1, 0.32, 1)",
+      "bounce": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+      "smooth": "cubic-bezier(0.4, 0, 0.2, 1)"
+    },
+    "duration": {
+      "fast": "200ms",
+      "normal": "300ms",
+      "slow": "500ms",
+      "reveal": "600ms"
+    },
+    "stagger": "100ms"
+  },
+  "components": {
+    "buttons": {
+      "primary": {
+        "background": "#B87A5E",
+        "color": "#FFFFFF",
+        "borderRadius": "9999px",
+        "minHeight": "48px",
+        "fontWeight": 500,
+        "letterSpacing": "0.04em",
+        "hoverScale": 1.03,
+        "hoverShadow": "0 8px 24px rgba(184,122,94,0.35)"
+      },
+      "secondary": {
+        "background": "transparent",
+        "color": "#B87A5E",
+        "border": "1.5px solid #B87A5E",
+        "borderRadius": "9999px",
+        "hoverBackground": "rgba(184,122,94,0.06)"
+      },
+      "ghost": {
+        "background": "transparent",
+        "color": "#5C3D2E",
+        "borderRadius": "12px",
+        "hoverBackground": "rgba(184,122,94,0.06)"
+      },
+      "gold": {
+        "background": "linear-gradient(135deg, #C9A96E, #B87A5E)",
+        "color": "#FFFFFF",
+        "borderRadius": "9999px",
+        "hoverScale": 1.03
+      }
+    },
+    "cards": {
+      "default": {
+        "background": "#FFFFFF",
+        "border": "1px solid rgba(184,122,94,0.08)",
+        "borderRadius": "20px",
+        "shadow": "0 4px 24px rgba(61,34,34,0.06), 0 1px 4px rgba(61,34,34,0.04)"
+      },
+      "glass": {
+        "background": "rgba(255,253,248,0.72)",
+        "backdropFilter": "blur(16px) saturate(1.5)",
+        "border": "1px solid rgba(255,255,255,0.6)",
+        "borderRadius": "20px",
+        "shadow": "0 8px 32px rgba(61,34,34,0.08)"
+      }
+    }
+  },
+  "images": {
+    "aspectRatios": {
+      "portrait": "4/5",
+      "square": "1/1",
+      "landscape": "16/9",
+      "hero": "21/9"
+    },
+    "treatment": {
+      "borderRadius": "16px",
+      "hoverScale": 1.06,
+      "transitionDuration": "500ms",
+      "objectFit": "cover"
+    }
+  }
+}
