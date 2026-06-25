@@ -23,8 +23,13 @@ export const revalidate = 60;
 // ---------------------------------------------------------------------------
 
 export async function generateStaticParams() {
-  const categories = await getCategories();
-  return categories.map((cat) => ({ category: cat.slug }));
+  try {
+    const categories = await getCategories();
+    return categories.map((cat) => ({ category: cat.slug }));
+  } catch {
+    // DB tables may not exist yet on first deploy — pages render via ISR at runtime
+    return [];
+  }
 }
 
 // ---------------------------------------------------------------------------
