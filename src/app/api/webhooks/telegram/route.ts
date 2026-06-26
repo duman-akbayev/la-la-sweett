@@ -10,8 +10,11 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { telegramBot } from '@/integrations/telegram.bot';
+import { getWeeklyAnalyticsFromDb } from '@/services/analytics.service';
 import { transitionState, cancelOrder } from '@/services/order.service';
 import type { TelegramCallbackQuery, TelegramCommand } from '@/types';
+
+telegramBot.setAnalyticsProvider(getWeeklyAnalyticsFromDb);
 
 // -----------------------------------------------------------------------------
 // Types for Telegram webhook payload

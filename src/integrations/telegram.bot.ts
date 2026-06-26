@@ -396,10 +396,31 @@ class TelegramBotImpl implements TelegramBot {
       .map(([ch, time]) => `  • ${ch}: ${(time / 1000).toFixed(1)}s`)
       .join('\n');
 
+    const orderLines = report.orderSummary
+      ? [
+          '<b>Orders This Week:</b>',
+          `  • Total: ${report.orderSummary.total}`,
+          `  • Inquiries / quoted: ${report.orderSummary.inquiries}`,
+          `  • Confirmed: ${report.orderSummary.confirmed}`,
+          `  • In production: ${report.orderSummary.inProduction}`,
+          `  • Completed: ${report.orderSummary.completed}`,
+          `  • Revenue: $${report.orderSummary.revenue.toFixed(2)}`,
+        ]
+      : [];
+
+    const orderChannels = report.ordersByChannel
+      ? Object.entries(report.ordersByChannel)
+          .map(([ch, count]) => `  • ${ch}: ${count}`)
+          .join('\n')
+      : '';
+
     return [
       '📈 <b>Weekly Analytics</b>',
       '',
       `📅 ${report.weekStarting.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} – ${report.weekEnding.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`,
+      '',
+      ...orderLines,
+      orderChannels ? ['', '<b>Orders by Channel:</b>', orderChannels] : [],
       '',
       '<b>Conversations by Channel:</b>',
       channels || '  No conversations this week.',
@@ -411,7 +432,9 @@ class TelegramBotImpl implements TelegramBot {
       '',
       '<b>Avg Response Time:</b>',
       avgResponseTimes || '  No data available.',
-    ].join('\n');
+    ]
+      .flat()
+      .join('\n');
   }
 
   /**

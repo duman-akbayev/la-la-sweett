@@ -11,7 +11,12 @@ vi.mock('@/integrations/telegram.bot', () => ({
   telegramBot: {
     handleCallbackQuery: vi.fn(),
     handleCommand: vi.fn(),
+    setAnalyticsProvider: vi.fn(),
   },
+}));
+
+vi.mock('@/services/analytics.service', () => ({
+  getWeeklyAnalyticsFromDb: vi.fn(),
 }));
 
 // Mock the order service

@@ -538,6 +538,15 @@ export interface WeeklyReport {
   topTopics: { topic: string; count: number }[];
   conversionRate: number;
   averageResponseTimeByChannel: Record<Channel, number>;
+  orderSummary?: {
+    total: number;
+    inquiries: number;
+    confirmed: number;
+    inProduction: number;
+    completed: number;
+    revenue: number;
+  };
+  ordersByChannel?: Record<Channel, number>;
 }
 
 /** Daily summary for Telegram */

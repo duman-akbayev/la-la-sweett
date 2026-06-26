@@ -24,6 +24,8 @@ import type {
   Channel,
 } from '../types';
 import { contentPlannerService } from './content-planner.service';
+import { getWeeklyAnalyticsFromDb } from './analytics.service';
+import { isDbConfigured } from '@/lib/supabase';
 
 // -----------------------------------------------------------------------------
 // Constants
@@ -340,6 +342,10 @@ export class MarketingServiceImpl implements IMarketingService {
   async getWeeklyAnalytics(): Promise<WeeklyReport> {
     if (this._weeklyAnalyticsProvider) {
       return this._weeklyAnalyticsProvider();
+    }
+
+    if (isDbConfigured()) {
+      return getWeeklyAnalyticsFromDb();
     }
 
     // Default: return a report with available data
