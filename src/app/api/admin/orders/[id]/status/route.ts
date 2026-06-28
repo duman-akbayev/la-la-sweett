@@ -60,7 +60,8 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
     .eq("id", id);
 
   if (updateError) {
-    return NextResponse.json({ error: updateError.message }, { status: 500 });
+    console.error("[Admin Status PATCH]", updateError.message);
+    return NextResponse.json({ error: "Failed to update order status" }, { status: 500 });
   }
 
   await supabase.from("order_state_transitions").insert({

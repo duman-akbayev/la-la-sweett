@@ -24,7 +24,8 @@ export async function GET(_request: NextRequest, { params }: RouteParams) {
     .order("created_at", { ascending: false });
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("[Admin Notes GET]", error.message);
+    return NextResponse.json({ error: "Failed to fetch notes" }, { status: 500 });
   }
 
   return NextResponse.json({ notes: data || [] });
@@ -65,7 +66,8 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
     .single();
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("[Admin Notes POST]", error.message);
+    return NextResponse.json({ error: "Failed to save note" }, { status: 500 });
   }
 
   return NextResponse.json({ note: data }, { status: 201 });

@@ -11,6 +11,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { whatsappIntegration } from '@/integrations/whatsapp';
+import { verifyMetaSignature } from '@/lib/webhook-verify';
 import type { WhatsAppWebhookPayload } from '@/types';
 
 // -----------------------------------------------------------------------------
@@ -45,9 +46,9 @@ export async function GET(request: NextRequest) {
   }
 
   // Verify the request matches expected parameters
-  if (mode === 'subscribe' && token === verifyToken) {
-    // Return the challenge as plain text (required by Meta)
-    return new NextResponse(challenge, {
+  if (mode === 'subscribe' && token === verifyToken && challenge) {
+    const sanitizedChallenge = challenge.replace(/[^a-zA-Z0-9_-]/g, "");
+    return new NextResponse(sanitizedChallenge, {
       status: 200,
       headers: { 'Content-Type': 'text/plain' },
     });
@@ -75,15 +76,22 @@ export async function GET(request: NextRequest) {
  */
 export async function POST(request: NextRequest) {
   try {
-    const payload: WhatsAppWebhookPayload = await request.json();
+    const rawBody = await request.text();
+    const appSecret = process.env.META_APP_SECRET;
 
-    // Process the webhook asynchronously but within the 3-second window
-    // We don't await fully here to ensure we respond quickly to Meta
+    if (appSecret) {
+      const signature = request.headers.get('x-hub-signature-256');
+      if (!verifyMetaSignature(rawBody, signature, appSecret)) {
+        console.error('[WhatsApp Webhook] Invalid signature');
+        return NextResponse.json({ status: 'received' }, { status: 200 });
+      }
+    }
+
+    const payload: WhatsAppWebhookPayload = JSON.parse(rawBody);
     await whatsappIntegration.handleWebhook(payload);
 
     return NextResponse.json({ status: 'received' }, { status: 200 });
   } catch (error) {
-    // Log error but still return 200 to avoid Meta retrying
     console.error('[WhatsApp Webhook] Error processing message:', error);
     return NextResponse.json({ status: 'received' }, { status: 200 });
   }

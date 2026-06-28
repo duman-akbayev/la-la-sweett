@@ -12,6 +12,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { telegramBot } from '@/integrations/telegram.bot';
 import { getWeeklyAnalyticsFromDb } from '@/services/analytics.service';
 import { transitionState, cancelOrder } from '@/services/order.service';
+import { verifyTelegramSecret } from '@/lib/webhook-verify';
 import type { TelegramCallbackQuery, TelegramCommand } from '@/types';
 
 telegramBot.setAnalyticsProvider(getWeeklyAnalyticsFromDb);
@@ -43,21 +44,22 @@ interface TelegramUpdate {
 
 export async function POST(request: NextRequest) {
   try {
+    const secretToken = process.env.TELEGRAM_WEBHOOK_SECRET;
+    if (!verifyTelegramSecret(request, secretToken)) {
+      console.error('[Telegram Webhook] Invalid secret token');
+      return NextResponse.json({ ok: true }, { status: 200 });
+    }
+
     const update: TelegramUpdate = await request.json();
 
-    // Handle callback queries (inline button presses)
     if (update.callback_query) {
       await handleCallbackQueryUpdate(update.callback_query);
-    }
-    // Handle commands (messages starting with /)
-    else if (update.message?.text?.startsWith('/')) {
+    } else if (update.message?.text?.startsWith('/')) {
       await handleCommandUpdate(update.message);
     }
 
-    // Always return 200 OK to Telegram
     return NextResponse.json({ ok: true }, { status: 200 });
   } catch (error) {
-    // Log error but still return 200 to avoid Telegram retrying
     console.error('[Telegram Webhook] Error processing update:', error);
     return NextResponse.json({ ok: true }, { status: 200 });
   }

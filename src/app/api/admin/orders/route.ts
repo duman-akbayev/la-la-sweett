@@ -13,8 +13,8 @@ export async function GET(request: NextRequest) {
   const search = searchParams.get("search");
   const sortBy = searchParams.get("sortBy") || "created_at";
   const sortOrder = searchParams.get("sortOrder") || "desc";
-  const page = parseInt(searchParams.get("page") || "1", 10);
-  const limit = parseInt(searchParams.get("limit") || "20", 10);
+  const page = Math.max(1, parseInt(searchParams.get("page") || "1", 10));
+  const limit = Math.min(100, Math.max(1, parseInt(searchParams.get("limit") || "20", 10)));
 
   if (!isDbConfigured()) {
     return NextResponse.json({ orders: [], total: 0, page: 1, totalPages: 0 });
@@ -32,9 +32,12 @@ export async function GET(request: NextRequest) {
   }
 
   if (search) {
-    query = query.or(
-      `design_description.ilike.%${search}%,flavor_preference.ilike.%${search}%,customers.name.ilike.%${search}%`,
-    );
+    const sanitized = search.replace(/[%_\\,().]/g, "").slice(0, 100);
+    if (sanitized) {
+      query = query.or(
+        `design_description.ilike.%${sanitized}%,flavor_preference.ilike.%${sanitized}%,customers.name.ilike.%${sanitized}%`,
+      );
+    }
   }
 
   const validSortColumns = [
@@ -51,7 +54,8 @@ export async function GET(request: NextRequest) {
   const { data, error, count } = await query;
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("[Admin Orders GET]", error.message);
+    return NextResponse.json({ error: "Failed to fetch orders" }, { status: 500 });
   }
 
   return NextResponse.json({

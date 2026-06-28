@@ -1,34 +1,41 @@
 import { cookies } from "next/headers";
+import { randomBytes, timingSafeEqual } from "crypto";
 import { getSupabaseAdmin, isDbConfigured } from "./supabase";
 
 const ADMIN_COOKIE = "la_la_admin_session";
 const SESSION_DURATION_MS = 24 * 60 * 60 * 1000;
 
+const inMemorySessions = new Map<string, number>();
+
 function generateToken(): string {
-  const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
-  let token = "";
-  for (let i = 0; i < 64; i++) {
-    token += chars[Math.floor(Math.random() * chars.length)];
-  }
-  return token;
+  return randomBytes(48).toString("base64url");
 }
 
 export async function validatePassword(password: string): Promise<boolean> {
   const adminPassword = process.env.ADMIN_PASSWORD;
   if (!adminPassword) return false;
-  return password === adminPassword;
+
+  const input = Buffer.from(password);
+  const expected = Buffer.from(adminPassword);
+  if (input.length !== expected.length) {
+    timingSafeEqual(expected, expected);
+    return false;
+  }
+  return timingSafeEqual(input, expected);
 }
 
 export async function createSession(): Promise<string> {
   const token = generateToken();
-  const expiresAt = new Date(Date.now() + SESSION_DURATION_MS).toISOString();
+  const expiresAt = Date.now() + SESSION_DURATION_MS;
 
   if (isDbConfigured()) {
     const supabase = getSupabaseAdmin();
     await supabase.from("admin_sessions").insert({
       token,
-      expires_at: expiresAt,
+      expires_at: new Date(expiresAt).toISOString(),
     });
+  } else {
+    inMemorySessions.set(token, expiresAt);
   }
 
   const cookieStore = await cookies();
@@ -49,7 +56,13 @@ export async function verifySession(): Promise<boolean> {
   if (!token) return false;
 
   if (!isDbConfigured()) {
-    return token.length === 64;
+    const expiresAt = inMemorySessions.get(token);
+    if (!expiresAt) return false;
+    if (Date.now() > expiresAt) {
+      inMemorySessions.delete(token);
+      return false;
+    }
+    return true;
   }
 
   const supabase = getSupabaseAdmin();
@@ -67,9 +80,13 @@ export async function destroySession(): Promise<void> {
   const cookieStore = await cookies();
   const token = cookieStore.get(ADMIN_COOKIE)?.value;
 
-  if (token && isDbConfigured()) {
-    const supabase = getSupabaseAdmin();
-    await supabase.from("admin_sessions").delete().eq("token", token);
+  if (token) {
+    if (isDbConfigured()) {
+      const supabase = getSupabaseAdmin();
+      await supabase.from("admin_sessions").delete().eq("token", token);
+    } else {
+      inMemorySessions.delete(token);
+    }
   }
 
   cookieStore.delete(ADMIN_COOKIE);
