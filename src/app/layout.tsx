@@ -3,6 +3,7 @@ import { Playfair_Display, Parisienne, Inter } from "next/font/google";
 import { LocalBusinessJsonLd } from "@/components/LocalBusinessJsonLd";
 import { ChatWidget } from "@/components/ChatWidget";
 import { MobileNav } from "@/components/MobileNav";
+import { FEATURES } from "@/lib/feature-flags";
 import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
@@ -49,59 +50,85 @@ export default function RootLayout({
         <header className="sticky top-0 z-50 border-b border-brand-rose/[0.06] bg-brand-ivory/85 backdrop-blur-xl backdrop-saturate-[1.2]">
           <nav
             aria-label="Main navigation"
-            className="mx-auto flex h-[72px] max-w-container items-center justify-between px-6 lg:px-8"
+            className="mx-auto max-w-container px-6 lg:px-8"
           >
-            <Link
-              href="/"
-              className="flex items-center gap-3"
-              aria-label="La La Sweett - Home"
-            >
-              <Image
-                src="/images/logo/Logo.svg"
-                alt="La La Sweett logo"
-                width={44}
-                height={44}
-                className="h-11 w-auto"
-                priority
-              />
-              <span className="font-script text-2xl text-brand-rose">
-                La La Sweett
-              </span>
-            </Link>
+            {/* Logo-free header (Phase 3): the brand logo now lives in the
+                homepage hero. Header is nav-only — hamburger on mobile,
+                centered links on desktop. */}
+            <div className="flex h-16 items-center">
+              {/* Mobile hamburger */}
+              <div className="md:hidden">
+                <MobileNav />
+              </div>
 
-            <ul className="hidden items-center gap-1 md:flex" role="list">
-              <li>
-                <Link
-                  href="/cakes"
-                  className="rounded-input px-4 py-2 text-sm font-medium tracking-wide text-brand-brown transition-colors duration-200 hover:bg-brand-rose/[0.06] hover:text-brand-rose"
-                >
-                  Our Cakes
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/order"
-                  className="rounded-input px-4 py-2 text-sm font-medium tracking-wide text-brand-brown transition-colors duration-200 hover:bg-brand-rose/[0.06] hover:text-brand-rose"
-                >
-                  Order
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/policies"
-                  className="rounded-input px-4 py-2 text-sm font-medium tracking-wide text-brand-brown transition-colors duration-200 hover:bg-brand-rose/[0.06] hover:text-brand-rose"
-                >
-                  Policies
-                </Link>
-              </li>
-              <li className="ml-3">
-                <Link href="/order" className="btn-primary !px-6 !py-2.5 !text-sm">
-                  Order Now
-                </Link>
-              </li>
-            </ul>
+              {/* Desktop nav links, centered */}
+              <ul
+                className="hidden w-full items-center justify-center gap-1 md:flex"
+                role="list"
+              >
+                <li>
+                  <Link
+                    href="/wholesale"
+                    className="rounded-input px-4 py-2 text-sm font-medium tracking-wide text-brand-brown transition-colors duration-200 hover:bg-brand-rose/[0.06] hover:text-brand-rose"
+                  >
+                    Wholesale
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/celebrations"
+                    className="rounded-input px-4 py-2 text-sm font-medium tracking-wide text-brand-brown transition-colors duration-200 hover:bg-brand-rose/[0.06] hover:text-brand-rose"
+                  >
+                    Celebrations
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/cakes"
+                    className="rounded-input px-4 py-2 text-sm font-medium tracking-wide text-brand-brown transition-colors duration-200 hover:bg-brand-rose/[0.06] hover:text-brand-rose"
+                  >
+                    Gallery
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/about"
+                    className="rounded-input px-4 py-2 text-sm font-medium tracking-wide text-brand-brown transition-colors duration-200 hover:bg-brand-rose/[0.06] hover:text-brand-rose"
+                  >
+                    About
+                  </Link>
+                </li>
 
-            <MobileNav />
+                {/* Temporarily hidden (feature-flagged) — see lib/feature-flags.ts */}
+                {FEATURES.SHOW_NAV_ORDER && (
+                  <li>
+                    <Link
+                      href="/order"
+                      className="rounded-input px-4 py-2 text-sm font-medium tracking-wide text-brand-brown transition-colors duration-200 hover:bg-brand-rose/[0.06] hover:text-brand-rose"
+                    >
+                      Order
+                    </Link>
+                  </li>
+                )}
+                {FEATURES.SHOW_NAV_POLICIES && (
+                  <li>
+                    <Link
+                      href="/policies"
+                      className="rounded-input px-4 py-2 text-sm font-medium tracking-wide text-brand-brown transition-colors duration-200 hover:bg-brand-rose/[0.06] hover:text-brand-rose"
+                    >
+                      Policies
+                    </Link>
+                  </li>
+                )}
+                {FEATURES.SHOW_NAV_ORDER_NOW && (
+                  <li className="ml-3">
+                    <Link href="/order" className="btn-primary !px-6 !py-2.5 !text-sm">
+                      Order Now
+                    </Link>
+                  </li>
+                )}
+              </ul>
+            </div>
           </nav>
         </header>
 
@@ -113,19 +140,18 @@ export default function RootLayout({
               <div className="lg:col-span-2">
                 <div className="flex items-center gap-3">
                   <Image
-                    src="/images/logo/Logo.svg"
+                    src="/images/logo/logo.png"
                     alt=""
                     width={36}
                     height={36}
-                    className="h-9 w-auto brightness-150"
+                    className="h-9 w-9 rounded-full object-cover"
                   />
                   <p className="font-script text-2xl text-brand-rose-light">
                     La La Sweett
                   </p>
                 </div>
-                <p className="mt-4 max-w-sm text-sm leading-relaxed text-brand-cream/60">
-                  Handcrafted custom cakes for every celebration in Austin,
-                  Texas. Made from scratch with quality ingredients and love.
+                <p className="mt-4 max-w-sm font-script text-2xl text-brand-rose-light">
+                  Sweet moments with love
                 </p>
                 <div className="mt-6 flex items-center gap-4">
                   <a
@@ -160,28 +186,57 @@ export default function RootLayout({
                 <ul className="mt-4 space-y-3" role="list">
                   <li>
                     <Link
+                      href="/wholesale"
+                      className="text-sm text-brand-cream/60 transition-colors duration-200 hover:text-white"
+                    >
+                      Wholesale Bakery
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/celebrations"
+                      className="text-sm text-brand-cream/60 transition-colors duration-200 hover:text-white"
+                    >
+                      Custom Cakes
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
                       href="/cakes"
                       className="text-sm text-brand-cream/60 transition-colors duration-200 hover:text-white"
                     >
-                      Our Cakes
+                      Gallery
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href="/order"
+                      href="/about"
                       className="text-sm text-brand-cream/60 transition-colors duration-200 hover:text-white"
                     >
-                      Order Custom Cake
+                      About
                     </Link>
                   </li>
-                  <li>
-                    <Link
-                      href="/policies"
-                      className="text-sm text-brand-cream/60 transition-colors duration-200 hover:text-white"
-                    >
-                      Policies & Pricing
-                    </Link>
-                  </li>
+                  {/* Temporarily hidden (feature-flagged) — see lib/feature-flags.ts */}
+                  {FEATURES.SHOW_FOOTER_ORDER && (
+                    <li>
+                      <Link
+                        href="/order"
+                        className="text-sm text-brand-cream/60 transition-colors duration-200 hover:text-white"
+                      >
+                        Order Custom Cake
+                      </Link>
+                    </li>
+                  )}
+                  {FEATURES.SHOW_FOOTER_POLICIES && (
+                    <li>
+                      <Link
+                        href="/policies"
+                        className="text-sm text-brand-cream/60 transition-colors duration-200 hover:text-white"
+                      >
+                        Policies & Pricing
+                      </Link>
+                    </li>
+                  )}
                 </ul>
               </div>
 
@@ -215,7 +270,9 @@ export default function RootLayout({
           </div>
         </footer>
 
-        <ChatWidget />
+        {/* Floating chat assistant — temporarily hidden (feature-flagged).
+            Restore by setting SHOW_CHAT_WIDGET = true in lib/feature-flags.ts */}
+        {FEATURES.SHOW_CHAT_WIDGET && <ChatWidget />}
       </body>
     </html>
   );

@@ -10,18 +10,27 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          rose: "#B87A5E",
-          "rose-light": "#D4A088",
-          "rose-dark": "#96604A",
-          gold: "#C9A96E",
-          berry: "#8B2252",
-          lavender: "#E8D5F0",
-          ivory: "#FFFDF8",
-          cream: "#F7F0E6",
-          blush: "#F9EDE8",
-          espresso: "#3D2222",
-          brown: "#5C3D2E",
-          taupe: "#8C7068",
+          // PASTEL PINK palette (Phase 3). Keep in sync with globals.css :root.
+          // Semantic aliases — prefer these for new work.
+          primary: "#C76B8A",
+          "primary-dark": "#A8516F",
+          secondary: "#F4C2D2",
+          accent: "#CE8BA6",
+          rose: "#C76B8A",
+          "rose-light": "#F4C2D2",
+          "rose-dark": "#A8516F",
+          // Previous (warm-brown) values for rollback:
+          //   rose #B87A5E, gold #D2B580, berry #C98AA0, blush #FBF1EC,
+          //   espresso #5A4A42, brown #7A5A48, taupe #8C7068, lavender #E8D5F0
+          gold: "#CE8BA6",
+          berry: "#D98AAC",
+          lavender: "#F0D9EC",
+          ivory: "#FFF9FB",
+          cream: "#FBF2F5",
+          blush: "#FDEFF3",
+          espresso: "#6E4A5A",
+          brown: "#8A4A63",
+          taupe: "#7E6B74",
         },
       },
       fontFamily: {
@@ -49,19 +58,20 @@ const config: Config = {
       boxShadow: {
         card: "0 4px 24px rgba(61,34,34,0.06), 0 1px 4px rgba(61,34,34,0.04)",
         "card-hover":
-          "0 12px 40px rgba(61,34,34,0.10), 0 4px 12px rgba(184,122,94,0.08)",
-        button: "0 4px 16px rgba(184,122,94,0.25)",
-        "button-hover": "0 8px 24px rgba(184,122,94,0.35)",
+          "0 12px 40px rgba(61,34,34,0.10), 0 4px 12px rgba(199,107,138,0.10)",
+        button: "0 4px 16px rgba(199,107,138,0.25)",
+        "button-hover": "0 8px 24px rgba(199,107,138,0.35)",
         glass: "0 8px 32px rgba(61,34,34,0.08)",
         elevated: "0 20px 60px rgba(61,34,34,0.12)",
       },
       backgroundImage: {
+        // Pastel pink gradients (Phase 3)
         "gradient-hero":
-          "linear-gradient(135deg, #F9EDE8 0%, #F7F0E6 50%, #FFFDF8 100%)",
+          "linear-gradient(135deg, #FDEFF3 0%, #FBF2F5 50%, #FFFFFF 100%)",
         "gradient-gold":
-          "linear-gradient(120deg, #C9A96E 0%, #D4A088 50%, #C9A96E 100%)",
+          "linear-gradient(120deg, #CE8BA6 0%, #F4C2D2 50%, #CE8BA6 100%)",
         "gradient-glass":
-          "linear-gradient(135deg, rgba(255,253,248,0.9) 0%, rgba(247,240,230,0.7) 100%)",
+          "linear-gradient(135deg, rgba(255,249,251,0.9) 0%, rgba(251,242,245,0.7) 100%)",
       },
       transitionTimingFunction: {
         spring: "cubic-bezier(0.23, 1, 0.32, 1)",

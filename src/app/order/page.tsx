@@ -6,6 +6,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { FEATURES } from '@/lib/feature-flags';
+import { ContactCallout } from '@/components/ContactCallout';
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -152,7 +154,18 @@ function validateForm(data: FormData): FormErrors {
 // Page Component
 // ---------------------------------------------------------------------------
 
+// Page entry point. While the Order Inquiry form is temporarily disabled
+// (SHOW_ORDER_INQUIRY = false), this route shows the warm "call/text us"
+// callout instead of the form. The full form component below is preserved
+// intact — flip the flag back on to restore it.
 export default function OrderPage() {
+  if (!FEATURES.SHOW_ORDER_INQUIRY) {
+    return <ContactCallout />;
+  }
+  return <OrderInquiryForm />;
+}
+
+function OrderInquiryForm() {
   const [flavors, setFlavors] = useState<string[]>([]);
   const [flavorsLoading, setFlavorsLoading] = useState(true);
   const [formData, setFormData] = useState<FormData>({

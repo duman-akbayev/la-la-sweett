@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import Link from "next/link";
+import { FEATURES } from "@/lib/feature-flags";
 
 export function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -56,40 +57,75 @@ export function MobileNav() {
           <ul className="mx-auto max-w-container space-y-1 px-6 py-5" role="list">
             <li>
               <Link
+                href="/wholesale"
+                onClick={closeMenu}
+                className="block rounded-input px-4 py-3 text-base font-medium text-brand-brown transition-colors hover:bg-brand-rose/[0.06] hover:text-brand-rose"
+              >
+                Wholesale
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/celebrations"
+                onClick={closeMenu}
+                className="block rounded-input px-4 py-3 text-base font-medium text-brand-brown transition-colors hover:bg-brand-rose/[0.06] hover:text-brand-rose"
+              >
+                Celebrations
+              </Link>
+            </li>
+            <li>
+              <Link
                 href="/cakes"
                 onClick={closeMenu}
                 className="block rounded-input px-4 py-3 text-base font-medium text-brand-brown transition-colors hover:bg-brand-rose/[0.06] hover:text-brand-rose"
               >
-                Our Cakes
+                Gallery
               </Link>
             </li>
             <li>
               <Link
-                href="/order"
+                href="/about"
                 onClick={closeMenu}
                 className="block rounded-input px-4 py-3 text-base font-medium text-brand-brown transition-colors hover:bg-brand-rose/[0.06] hover:text-brand-rose"
               >
-                Order
+                About
               </Link>
             </li>
-            <li>
-              <Link
-                href="/policies"
-                onClick={closeMenu}
-                className="block rounded-input px-4 py-3 text-base font-medium text-brand-brown transition-colors hover:bg-brand-rose/[0.06] hover:text-brand-rose"
-              >
-                Policies
-              </Link>
-            </li>
-            <li className="pt-3">
-              <Link
-                href="/order"
-                onClick={closeMenu}
-                className="btn-gold block w-full text-center"
-              >
-                Order Now
-              </Link>
-            </li>
+
+            {/* Temporarily hidden (feature-flagged) — see lib/feature-flags.ts */}
+            {FEATURES.SHOW_NAV_ORDER && (
+              <li>
+                <Link
+                  href="/order"
+                  onClick={closeMenu}
+                  className="block rounded-input px-4 py-3 text-base font-medium text-brand-brown transition-colors hover:bg-brand-rose/[0.06] hover:text-brand-rose"
+                >
+                  Order
+                </Link>
+              </li>
+            )}
+            {FEATURES.SHOW_NAV_POLICIES && (
+              <li>
+                <Link
+                  href="/policies"
+                  onClick={closeMenu}
+                  className="block rounded-input px-4 py-3 text-base font-medium text-brand-brown transition-colors hover:bg-brand-rose/[0.06] hover:text-brand-rose"
+                >
+                  Policies
+                </Link>
+              </li>
+            )}
+            {FEATURES.SHOW_NAV_ORDER_NOW && (
+              <li className="pt-3">
+                <Link
+                  href="/order"
+                  onClick={closeMenu}
+                  className="btn-gold block w-full text-center"
+                >
+                  Order Now
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       )}

@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Gallery } from "@/components/Gallery";
+import { ContactCallout } from "@/components/ContactCallout";
+import { FEATURES } from "@/lib/feature-flags";
 
 export const metadata: Metadata = {
   title: "Custom Cakes Austin TX | La La Sweett Bakery",
@@ -87,31 +89,40 @@ export default function Home() {
         {/* Subtle radial glow */}
         <div
           className="pointer-events-none absolute inset-0"
-          style={{ background: "radial-gradient(ellipse at 50% 40%, rgba(201,169,110,0.06) 0%, transparent 60%)" }}
+          style={{ background: "radial-gradient(ellipse at 50% 40%, rgba(199,107,138,0.06) 0%, transparent 60%)" }}
           aria-hidden="true"
         />
 
         <div className="relative z-10 mx-auto max-w-2xl">
-          <p className="animate-fade-up font-script text-xl text-brand-rose opacity-0 sm:text-2xl">
+          {/* Brand logo — moved out of the header (Phase 3) and shown large and
+              centered above the hero text. Responsive: ~224px → 320px. */}
+          <Image
+            src="/images/logo/logo.png"
+            alt="La La Sweett logo"
+            width={320}
+            height={320}
+            priority
+            className="mx-auto mb-6 h-56 w-56 animate-fade-up rounded-full object-cover opacity-0 sm:h-64 sm:w-64 lg:h-80 lg:w-80"
+          />
+          <p className="animate-fade-up font-script text-xl text-brand-rose opacity-0 animate-delay-100 sm:text-2xl">
             Sweet Moments With Love
           </p>
           <h1
             id="hero-heading"
             className="mt-4 animate-fade-up font-display text-display font-bold text-brand-espresso opacity-0 animate-delay-200 sm:text-display-xl"
           >
-            Handcrafted Cakes for Your Celebrations
+            Wholesale Bakery &amp; Custom Cakes
           </h1>
           <p className="mt-6 animate-fade-up text-body-lg text-brand-taupe opacity-0 animate-delay-300">
-            Custom cakes made from scratch in Austin, Texas. Every creation is
-            uniquely designed for birthdays, weddings, baby showers, and all of
-            life&apos;s sweetest moments.
+            Freshly handcrafted desserts for businesses and custom cakes for
+            every celebration.
           </p>
           <div className="mt-10 flex animate-fade-up flex-col items-center gap-4 opacity-0 animate-delay-400 sm:flex-row sm:justify-center">
-            <Link href="/order" className="btn-gold">
-              Order Your Custom Cake
+            <Link href="/wholesale" className="btn-gold">
+              For Businesses
             </Link>
-            <Link href="/cakes" className="btn-secondary">
-              Explore Our Creations
+            <Link href="/celebrations" className="btn-secondary">
+              For Celebrations
             </Link>
           </div>
         </div>
@@ -124,7 +135,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Cakes Section */}
+      {/* Featured Cakes Section — temporarily hidden (feature-flagged).
+          Restore by setting SHOW_HOME_FEATURED = true in feature-flags.ts */}
+      {FEATURES.SHOW_HOME_FEATURED && (
       <section
         aria-labelledby="featured-heading"
         className="mx-auto max-w-container px-6 py-section-y-mobile lg:px-8 lg:py-section-y"
@@ -186,6 +199,7 @@ export default function Home() {
           ))}
         </div>
       </section>
+      )}
 
       {/* Gallery Carousel Section */}
       <section
@@ -220,7 +234,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Menu Highlights */}
+      {/* Menu Highlights ("Made With Love / Cake Flavors" + Full Menu CTA) —
+          temporarily hidden (feature-flagged). Restore by setting
+          SHOW_HOME_FLAVORS = true in feature-flags.ts */}
+      {FEATURES.SHOW_HOME_FLAVORS && (
       <section
         aria-labelledby="menu-heading"
         className="mx-auto max-w-container px-6 py-section-y-mobile lg:px-8 lg:py-section-y"
@@ -271,33 +288,41 @@ export default function Home() {
           </div>
         </ScrollReveal>
       </section>
+      )}
 
-      {/* Why Choose Us */}
+      {/* Why Choose La La Sweett */}
       <section
         aria-labelledby="why-heading"
         className="bg-brand-blush/50 py-section-y-mobile lg:py-section-y"
       >
         <div className="mx-auto max-w-container px-6 lg:px-8">
           <ScrollReveal>
-            <h2
-              id="why-heading"
-              className="text-center font-display text-heading-1 text-brand-brown"
-            >
-              Why La La Sweett?
-            </h2>
+            <div className="text-center">
+              <h2
+                id="why-heading"
+                className="font-display text-heading-1 text-brand-brown"
+              >
+                Why Choose La La Sweett
+              </h2>
+              <p className="mx-auto mt-4 max-w-lg text-body-lg text-brand-taupe">
+                Handcrafted with care, made to impress.
+              </p>
+            </div>
           </ScrollReveal>
 
-          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { title: "Made from Scratch", desc: "Every cake baked fresh with quality ingredients — never frozen, never mass-produced." },
-              { title: "Custom Designs", desc: "Your vision brought to life. Every cake is uniquely crafted for your celebration." },
-              { title: "Local & Personal", desc: "Small-batch bakery in Austin, TX. Direct communication with your baker." },
-              { title: "Crafted with Care", desc: "Licensed commercial kitchen. Consistent quality in every bite, every time." },
+              { icon: "🍓", title: "Freshly Made", desc: "Every dessert is freshly prepared using quality ingredients." },
+              { icon: "🥣", title: "Made from Scratch", desc: "We bake everything from scratch with attention to every detail." },
+              { icon: "🏢", title: "Licensed Commercial Kitchen", desc: "Prepared in a licensed commercial kitchen that meets food safety standards." },
+              { icon: "🛍️", title: "Wholesale & Retail", desc: "From business partnerships to custom celebration cakes — we do it all." },
+              { icon: "🎂", title: "Custom Designs", desc: "Every cake is uniquely designed for your special occasion." },
+              { icon: "📍", title: "Austin, Texas", desc: "Proudly serving Austin and surrounding areas." },
             ].map((item, index) => (
               <ScrollReveal key={item.title} delay={index * 100}>
-                <div className="text-center">
-                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-brand-rose/[0.08]">
-                    <div className="h-2 w-2 rounded-full bg-brand-rose" />
+                <div className="h-full rounded-card border border-brand-rose/[0.08] bg-white p-7 text-center shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover">
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-brand-rose/[0.10] text-2xl">
+                    <span aria-hidden="true">{item.icon}</span>
                   </div>
                   <h3 className="font-display text-lg text-brand-brown">
                     {item.title}
@@ -312,42 +337,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section
-        aria-labelledby="cta-heading"
-        className="relative overflow-hidden py-section-y-mobile lg:py-section-y"
-      >
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(184,122,94,0.05) 0%, transparent 70%)" }}
-          aria-hidden="true"
-        />
-        <div className="relative mx-auto max-w-narrow px-6 text-center lg:px-8">
-          <ScrollReveal>
-            <p className="font-script text-2xl text-brand-rose">
-              Let&apos;s Create Something Sweet
-            </p>
-            <h2
-              id="cta-heading"
-              className="mt-3 font-display text-heading-1 text-brand-brown"
-            >
-              Ready to Order Your Custom Cake?
-            </h2>
-            <p className="mt-4 text-body text-brand-taupe">
-              Tell us about your celebration and we&apos;ll design something
-              unforgettable. Minimum 1–2 weeks lead time. 50% deposit to book.
-            </p>
-            <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-              <Link href="/order" className="btn-gold">
-                Start Your Order
-              </Link>
-              <Link href="/policies" className="btn-secondary">
-                View Pricing & Policies
-              </Link>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+      {/* Contact Callout — replaces the former "Order Inquiry" CTA section
+          while the order form is temporarily disabled (see feature-flags.ts).
+          To restore the original CTA, flip SHOW_ORDER_INQUIRY back on and swap
+          this back for the previous section from git history. */}
+      <ContactCallout />
     </>
   );
 }
