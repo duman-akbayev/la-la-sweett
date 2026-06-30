@@ -4,9 +4,10 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { ContactCallout } from "@/components/ContactCallout";
 
 export const metadata: Metadata = {
-  title: "About Me | La La Sweett — Akmaral, Austin TX",
+  title: "About — Meet Akmaral, Our Pastry Chef",
   description:
     "Meet Akmaral — pastry chef, mom, and founder of La La Sweett. A small, woman-owned custom cake business handcrafted with love in Austin, Texas.",
+  alternates: { canonical: "/about" },
 };
 
 export default function AboutPage() {

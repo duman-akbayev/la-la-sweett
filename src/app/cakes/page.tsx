@@ -7,9 +7,10 @@ import { FEATURES } from "@/lib/feature-flags";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Our Cakes | La La Sweett - Custom Cakes Austin TX",
+  title: "Cake Gallery — Custom Cakes in Austin, TX",
   description:
-    "Browse our gallery of custom cakes, cupcakes, cookies, and desserts in Austin, TX. Every creation is handcrafted to order.",
+    "Browse our gallery of handcrafted custom cakes, cupcakes, cookies, and desserts in Austin, TX. Every creation is made to order by La La Sweett.",
+  alternates: { canonical: "/cakes" },
 };
 
 export const revalidate = 60;

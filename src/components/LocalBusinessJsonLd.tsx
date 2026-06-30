@@ -14,9 +14,16 @@ export function LocalBusinessJsonLd() {
     '@type': 'Bakery',
     name: 'La La Sweett',
     description:
-      'Custom cakes bakery in Austin, TX specializing in birthday, wedding, and celebration cakes.',
+      'Custom cakes and wholesale bakery in Austin, TX specializing in birthday, wedding, and celebration cakes, plus cookies and muffins for businesses.',
     url: 'https://lalasweett.com',
-    telephone: '+1-512-000-0000',
+    telephone: '+1-224-237-5853',
+    image: 'https://lalasweett.com/images/logo/logo.png',
+    logo: 'https://lalasweett.com/images/logo/logo.png',
+    sameAs: ['https://www.instagram.com/la_la_sweett'],
+    areaServed: {
+      '@type': 'City',
+      name: 'Austin',
+    },
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Austin',

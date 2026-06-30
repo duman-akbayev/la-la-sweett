@@ -5,9 +5,10 @@ import { CelebrationCakeCard } from "@/components/CelebrationCakeCard";
 import { CELEBRATION_CAKES } from "@/data/cakes";
 
 export const metadata: Metadata = {
-  title: "Custom Cakes | La La Sweett — Celebration Cakes Austin, TX",
+  title: "Custom Celebration Cakes in Austin, TX",
   description:
     "Beautiful handcrafted custom cakes for birthdays, weddings, and every celebration. Medovik, triple chocolate, red velvet, and more from La La Sweett in Austin, TX.",
+  alternates: { canonical: "/celebrations" },
 };
 
 export default function CelebrationsPage() {

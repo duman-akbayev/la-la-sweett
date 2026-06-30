@@ -7,9 +7,11 @@ import { ContactCallout } from "@/components/ContactCallout";
 import { FEATURES } from "@/lib/feature-flags";
 
 export const metadata: Metadata = {
-  title: "Custom Cakes Austin TX | La La Sweett Bakery",
+  title: {
+    absolute: "La La Sweett | Custom Cakes & Wholesale Bakery in Austin, TX",
+  },
   description:
-    "Handcrafted custom cakes in Austin, TX. Birthday, wedding, baby shower and celebration cakes made with love by La La Sweett.",
+    "Handcrafted custom cakes and wholesale baked goods in Austin, TX. Birthday, wedding, and celebration cakes plus cookies and muffins for cafes and businesses — made from scratch by La La Sweett.",
 };
 
 const FEATURED_CAKES = [

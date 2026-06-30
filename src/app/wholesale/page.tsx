@@ -5,9 +5,10 @@ import { WholesaleCard } from "@/components/WholesaleCard";
 import { WHOLESALE_PRODUCTS } from "@/data/wholesale";
 
 export const metadata: Metadata = {
-  title: "Wholesale Bakery | La La Sweett — Austin, TX",
+  title: "Wholesale Bakery in Austin, TX",
   description:
     "Fresh handcrafted baked goods for cafes, offices, events, and business partners. Wholesale honey cakes, cookies, and muffins from La La Sweett in Austin, TX.",
+  alternates: { canonical: "/wholesale" },
 };
 
 export default function WholesalePage() {

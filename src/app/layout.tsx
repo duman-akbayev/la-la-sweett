@@ -27,9 +27,31 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Custom Cakes Austin TX | La La Sweett Bakery",
+  metadataBase: new URL("https://lalasweett.com"),
+  title: {
+    default: "La La Sweett | Custom Cakes & Wholesale Bakery in Austin, TX",
+    template: "%s | La La Sweett",
+  },
   description:
-    "Handcrafted custom cakes in Austin, TX. Birthday, wedding, baby shower cakes and desserts made with love by La La Sweett bakery.",
+    "Handcrafted custom cakes and wholesale baked goods in Austin, TX. Birthday, wedding, and celebration cakes, plus cookies and muffins for cafes and businesses — made from scratch by La La Sweett.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://lalasweett.com",
+    siteName: "La La Sweett",
+    title: "La La Sweett | Custom Cakes & Wholesale Bakery in Austin, TX",
+    description:
+      "Handcrafted custom cakes and wholesale baked goods in Austin, TX — made from scratch with love.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "La La Sweett | Custom Cakes & Wholesale Bakery in Austin, TX",
+    description:
+      "Handcrafted custom cakes and wholesale baked goods in Austin, TX — made from scratch with love.",
+  },
 };
 
 export default function RootLayout({
