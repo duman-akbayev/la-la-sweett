@@ -57,6 +57,15 @@ export function MobileNav() {
           <ul className="mx-auto max-w-container space-y-1 px-6 py-5" role="list">
             <li>
               <Link
+                href="/"
+                onClick={closeMenu}
+                className="block rounded-input px-4 py-3 text-base font-medium text-brand-brown transition-colors hover:bg-brand-rose/[0.06] hover:text-brand-rose"
+              >
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link
                 href="/wholesale"
                 onClick={closeMenu}
                 className="block rounded-input px-4 py-3 text-base font-medium text-brand-brown transition-colors hover:bg-brand-rose/[0.06] hover:text-brand-rose"

@@ -8,7 +8,10 @@
 import { ScrollReveal } from "@/components/ScrollReveal";
 
 const PHONE_DISPLAY = "224-237-5853";
-const PHONE_TEL = "+12242375853";
+const PHONE_E164 = "+12242375853";
+// Use the sms: scheme so tapping the number opens the messaging app (we prefer
+// texts over calls), not the phone dialer.
+const PHONE_SMS = `sms:${PHONE_E164}`;
 
 export interface ContactCalloutProps {
   /** Optional extra classes on the outer <section> (e.g. background overrides) */
@@ -48,7 +51,7 @@ export function ContactCallout({ className = "" }: ContactCalloutProps) {
             <p className="text-brand-espresso">
               Call or text us directly:{" "}
               <a
-                href={`tel:${PHONE_TEL}`}
+                href={PHONE_SMS}
                 className="whitespace-nowrap font-semibold text-brand-rose underline decoration-brand-rose/30 underline-offset-4 transition-colors hover:text-brand-rose-dark"
               >
                 📱 {PHONE_DISPLAY}
@@ -65,8 +68,8 @@ export function ContactCallout({ className = "" }: ContactCalloutProps) {
           </div>
 
           <div className="mt-10 flex justify-center">
-            <a href={`tel:${PHONE_TEL}`} className="btn-gold">
-              Call or Text {PHONE_DISPLAY}
+            <a href={PHONE_SMS} className="btn-gold">
+              Text Us at {PHONE_DISPLAY}
             </a>
           </div>
         </ScrollReveal>

@@ -67,7 +67,7 @@ export default function Home() {
       {/* Hero Section */}
       <section
         aria-labelledby="hero-heading"
-        className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center sm:min-h-[90svh] lg:px-8"
+        className="relative flex min-h-[100svh] flex-col items-center justify-start overflow-hidden px-6 pb-24 pt-12 text-center sm:min-h-[90svh] sm:pt-16 lg:px-8"
       >
         {/* Gradient background */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-hero" aria-hidden="true" />

@@ -52,18 +52,22 @@ export default function RootLayout({
             aria-label="Main navigation"
             className="mx-auto max-w-container px-6 lg:px-8"
           >
-            {/* Logo-free header (Phase 3): the brand logo now lives in the
-                homepage hero. Header is nav-only — hamburger on mobile,
-                centered links on desktop. */}
-            <div className="flex h-16 items-center">
-              {/* Mobile hamburger */}
-              <div className="md:hidden">
-                <MobileNav />
-              </div>
+            {/* The large brand logo lives in the homepage hero (Phase 3).
+                The header keeps a small wordmark that links home from any page,
+                centered nav links on desktop, and a hamburger on mobile. */}
+            <div className="relative flex h-16 items-center justify-between">
+              {/* Brand wordmark — quick "return home" link from any page */}
+              <Link
+                href="/"
+                aria-label="La La Sweett - Home"
+                className="font-script text-xl text-brand-rose transition-colors duration-200 hover:text-brand-rose-dark sm:text-2xl"
+              >
+                La La Sweett
+              </Link>
 
               {/* Desktop nav links, centered */}
               <ul
-                className="hidden w-full items-center justify-center gap-1 md:flex"
+                className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 md:flex"
                 role="list"
               >
                 <li>
@@ -128,6 +132,11 @@ export default function RootLayout({
                   </li>
                 )}
               </ul>
+
+              {/* Mobile hamburger */}
+              <div className="md:hidden">
+                <MobileNav />
+              </div>
             </div>
           </nav>
         </header>
@@ -248,7 +257,7 @@ export default function RootLayout({
                   <p className="text-sm text-brand-cream/60">Austin, TX</p>
                   <p className="text-sm text-brand-cream/60">
                     <a
-                      href="tel:+12242375853"
+                      href="sms:+12242375853"
                       className="transition-colors duration-200 hover:text-white"
                     >
                       (224) 237-5853
