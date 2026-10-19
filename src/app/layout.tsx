@@ -4,6 +4,7 @@ import { LocalBusinessJsonLd } from "@/components/LocalBusinessJsonLd";
 import { ChatWidget } from "@/components/ChatWidget";
 import { MobileNav } from "@/components/MobileNav";
 import { FEATURES } from "@/lib/feature-flags";
+import { Analytics } from "@vercel/analytics/next";
 import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
@@ -304,6 +305,7 @@ export default function RootLayout({
         {/* Floating chat assistant — temporarily hidden (feature-flagged).
             Restore by setting SHOW_CHAT_WIDGET = true in lib/feature-flags.ts */}
         {FEATURES.SHOW_CHAT_WIDGET && <ChatWidget />}
+        <Analytics />
       </body>
     </html>
   );
