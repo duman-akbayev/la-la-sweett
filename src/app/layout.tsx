@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Playfair_Display, Parisienne, Inter } from "next/font/google";
 import { LocalBusinessJsonLd } from "@/components/LocalBusinessJsonLd";
 import { ChatWidget } from "@/components/ChatWidget";
@@ -304,6 +305,7 @@ export default function RootLayout({
         {/* Floating chat assistant — temporarily hidden (feature-flagged).
             Restore by setting SHOW_CHAT_WIDGET = true in lib/feature-flags.ts */}
         {FEATURES.SHOW_CHAT_WIDGET && <ChatWidget />}
+        <Analytics />
       </body>
     </html>
   );
